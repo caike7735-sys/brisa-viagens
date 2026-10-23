@@ -2,7 +2,7 @@
 
 Site responsivo de inspiração para viagens, em português, feito com HTML, CSS e JavaScript, sem frameworks ou dependências de código externas.
 
-**[Acesse o site publicado](https://caike7735-sys.github.io/brisa-viagens/)**
+**[Ver site online](https://caike7735-sys.github.io/brisa-viagens/)**
 
 ## Funcionalidades
 
