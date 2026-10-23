@@ -1,8 +1,12 @@
 # Brisa Viagens
 
-Site responsivo de inspiração para viagens, em português, feito com HTML, CSS e JavaScript, sem frameworks ou dependências de código externas.
+Um site para explorar destinos e planejar uma viagem: pesquisar lugares, comparar estimativas de preço e guardar favoritos para consultar depois.
 
-**[Acesse o site publicado](https://caike7735-sys.github.io/brisa-viagens/)**
+**[Ver site online](https://caike7735-sys.github.io/brisa-viagens/)**
+
+## O projeto
+
+O Brisa Viagens é um projeto de portfólio feito com HTML, CSS e JavaScript. Reúne uma interface de busca de destinos e recursos de planejamento, sem depender de uma conta para salvar favoritos.
 
 ## Funcionalidades
 
@@ -13,15 +17,13 @@ Site responsivo de inspiração para viagens, em português, feito com HTML, CSS
 - Detalhes dos destinos e estimativa de valor conforme o número de viajantes.
 - Layout adaptado para celulares, tablets e computadores.
 
-## Tecnologias utilizadas
+## Como funciona
 
-| Tecnologia | Uso no projeto |
-| --- | --- |
-| HTML | Estrutura e conteúdo da página. |
-| CSS | Estilos, layout e adaptação a diferentes telas. |
-| JavaScript | Busca, filtros, favoritos e interações. |
-| Node.js | Servidor de desenvolvimento e verificações locais. |
-| GitHub Pages | Hospedagem do site publicado. |
+A interface usa HTML, CSS e JavaScript puro, sem frameworks ou pacotes externos de código. A busca, os filtros e os cálculos acontecem no navegador.
+
+Os favoritos ficam no `localStorage`: continuam disponíveis ao recarregar a página, mas não são sincronizados entre dispositivos.
+
+O Node.js serve para executar o site e as verificações no computador. A versão pública fica hospedada no GitHub Pages. Fotos e fontes externas precisam de conexão com a internet.
 
 ## Executar no computador
 
@@ -33,29 +35,17 @@ npm start
 
 Depois, acesse [http://localhost:3000](http://localhost:3000). Não é necessário instalar pacotes. Também é possível abrir `index.html` diretamente no navegador.
 
-Para visualizar suas alterações, salve os arquivos e atualize a página.
+## Verificações
 
-## Estrutura do projeto
-
-```text
-index.html   Estrutura da página
-styles.css   Estilos e layout responsivo
-app.js       Funcionalidades da interface
-server.js    Servidor local em Node.js
-verify.cjs   Verificações funcionais
-package.json Comandos do projeto
+```bash
+npm run check
+npm test
 ```
-
-## Publicação e atualizações
-
-O site já está publicado no GitHub Pages. As alterações enviadas para a branch `main` são publicadas automaticamente após a conclusão do processo de publicação do GitHub.
-
-## Verificar localmente
-
-Execute `npm run check` e `npm test`.
 
 As verificações cobrem sintaxe JavaScript e comportamentos como busca, filtros, favoritos, estimativa por viajantes e ordenação por preço.
 
-## Sobre a demonstração
+## Limitações do projeto
 
-Este é um projeto demonstrativo: os preços e as avaliações são ilustrativos. Não há integração com reservas, pagamentos ou envio de e-mails. O formulário de novidades registra o interesse apenas no navegador. Fotos e fontes dependem de conexão com a internet; as imagens são referências visuais dos destinos.
+Os destinos, preços e avaliações são demonstrativos. O site não realiza reservas ou pagamentos. O formulário de novidades não envia e-mails; registra o interesse apenas no navegador.
+
+As fotos ilustram os destinos e não representam uma oferta de hospedagem ou pacote de viagem.
