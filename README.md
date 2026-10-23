@@ -1,28 +1,61 @@
-# Brisa — viagens
+# Brisa Viagens
 
-Site responsivo em português, feito com HTML, CSS e JavaScript, sem dependências.
+Site responsivo de inspiração para viagens, em português, feito com HTML, CSS e JavaScript, sem frameworks ou dependências de código externas.
 
-## Abrir
+**[Acesse o site publicado](https://caike7735-sys.github.io/brisa-viagens/)**
 
-Execute `npm start` e acesse http://localhost:3000. Também é possível abrir `index.html` diretamente.
+## Funcionalidades
 
-Busca por nome, região ou país; filtros de categoria; ordenação; favoritos persistidos no navegador; detalhes dos destinos e estimativa por número de viajantes. O formulário de novidades registra o interesse apenas no navegador.
+- Busca por nome, região ou país, com suporte a termos sem acentos.
+- Filtros por praia, natureza, cidades e aventura.
+- Ordenação por popularidade, preço e avaliação.
+- Favoritos salvos no navegador com `localStorage`.
+- Detalhes dos destinos e estimativa de valor conforme o número de viajantes.
+- Layout adaptado para celulares, tablets e computadores.
 
-Os preços e as avaliações são ilustrativos. Não há integração com reservas, pagamentos ou envio de e-mails. Fotos e fontes dependem de conexão com a internet; as imagens são referências visuais dos destinos.
+## Tecnologias utilizadas
 
-## Publicar no GitHub Pages
+| Tecnologia | Uso no projeto |
+| --- | --- |
+| HTML | Estrutura e conteúdo da página. |
+| CSS | Estilos, layout e adaptação a diferentes telas. |
+| JavaScript | Busca, filtros, favoritos e interações. |
+| Node.js | Servidor de desenvolvimento e verificações locais. |
+| GitHub Pages | Hospedagem do site publicado. |
 
-1. Entre em https://github.com/new e crie um repositório público chamado `brisa-viagens`.
-2. Na página do repositório, escolha **uploading an existing file** (ou **Add file → Upload files**).
-3. Envie os arquivos deste projeto para a raiz do repositório, incluindo `index.html`, `styles.css`, `app.js` e `.nojekyll`. Não envie o ZIP como um único arquivo: extraia seu conteúdo antes de enviar. O `index.html` precisa ficar diretamente na raiz, sem uma pasta intermediária.
-4. Clique em **Commit changes** para salvar.
-5. Vá em **Settings → Pages**. Em **Source**, selecione **Deploy from a branch**; em **Branch**, selecione `main` e `/(root)`; clique em **Save**.
-6. Aguarde a publicação e copie o endereço exibido nessa página. O formato será `https://SEU-USUARIO.github.io/brisa-viagens/`.
+## Executar no computador
 
-O site publicado funciona sem o servidor Node e sem manter seu computador ligado. Para atualizar, envie os arquivos alterados ao mesmo repositório.
+Com o Node.js instalado, abra um terminal na pasta do projeto e execute:
 
-Documentação oficial: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+```bash
+npm start
+```
+
+Depois, acesse [http://localhost:3000](http://localhost:3000). Não é necessário instalar pacotes. Também é possível abrir `index.html` diretamente no navegador.
+
+Para visualizar suas alterações, salve os arquivos e atualize a página.
+
+## Estrutura do projeto
+
+```text
+index.html   Estrutura da página
+styles.css   Estilos e layout responsivo
+app.js       Funcionalidades da interface
+server.js    Servidor local em Node.js
+verify.cjs   Verificações funcionais
+package.json Comandos do projeto
+```
+
+## Publicação e atualizações
+
+O site já está publicado no GitHub Pages. As alterações enviadas para a branch `main` são publicadas automaticamente após a conclusão do processo de publicação do GitHub.
 
 ## Verificar localmente
 
 Execute `npm run check` e `npm test`.
+
+As verificações cobrem sintaxe JavaScript e comportamentos como busca, filtros, favoritos, estimativa por viajantes e ordenação por preço.
+
+## Sobre a demonstração
+
+Este é um projeto demonstrativo: os preços e as avaliações são ilustrativos. Não há integração com reservas, pagamentos ou envio de e-mails. O formulário de novidades registra o interesse apenas no navegador. Fotos e fontes dependem de conexão com a internet; as imagens são referências visuais dos destinos.
