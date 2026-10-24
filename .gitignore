@@ -1,9 +1,8 @@
 node_modules/
-.sites-runtime/
-*.tar.gz
-*.tgz
-*.zip
 dist/
-outputs/
+*.zip
+*.tgz
+*.tar.gz
 .openai/
-.sites-checkout/
+test-results/
+playwright-report/

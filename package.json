@@ -2,10 +2,27 @@
   "name": "brisa-viagens",
   "version": "1.0.0",
   "private": true,
-  "description": "Site interativo de inspiração para viagens",
+  "description": "Site interativo de inspira\u00e7\u00e3o para viagens",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check app.js && node --check server.js",
-    "test": "node verify.cjs"
+    "check": "node --check app.js && node --check server.js && eslint .",
+    "test": "playwright test",
+    "build": "node build.cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "sharp": "^0.35.5"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.15"
   }
 }

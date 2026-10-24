@@ -19,11 +19,11 @@ O Brisa Viagens é um projeto de portfólio feito com HTML, CSS e JavaScript. Re
 
 ## Como funciona
 
-A interface usa HTML, CSS e JavaScript puro, sem frameworks ou pacotes externos de código. A busca, os filtros e os cálculos acontecem no navegador.
+A interface usa HTML, CSS e JavaScript puro, sem frameworks ou dependências de execução. A busca, os filtros e os cálculos acontecem no navegador.
 
 Os favoritos ficam no `localStorage`: continuam disponíveis ao recarregar a página, mas não são sincronizados entre dispositivos.
 
-O Node.js serve para executar o site e as verificações no computador. A versão pública fica hospedada no GitHub Pages. Fotos e fontes externas precisam de conexão com a internet.
+O Node.js serve para executar o site e as verificações no computador. A versão pública fica hospedada no GitHub Pages. As fontes são locais; as fotos externas precisam de conexão. Se uma foto falhar, será exibida uma imagem local de inspiração.
 
 ## Executar no computador
 
@@ -33,19 +33,31 @@ Com o Node.js instalado, abra um terminal na pasta do projeto e execute:
 npm start
 ```
 
-Depois, acesse [http://localhost:3000](http://localhost:3000). Não é necessário instalar pacotes. Também é possível abrir `index.html` diretamente no navegador.
+Depois, acesse [http://localhost:3000](http://localhost:3000). Execute `npm ci` na primeira utilização. O site usa módulos JavaScript e deve ser aberto pelo servidor local.
 
 ## Verificações
 
 ```bash
 npm run check
+npx playwright install chromium
 npm test
+npm run build
 ```
 
 As verificações cobrem sintaxe JavaScript e comportamentos como busca, filtros, favoritos, estimativa por viajantes e ordenação por preço.
 
 ## Limitações do projeto
 
-Os destinos, preços e avaliações são demonstrativos. O site não realiza reservas ou pagamentos. O formulário de novidades não envia e-mails; registra o interesse apenas no navegador.
+Os destinos, preços e avaliações são demonstrativos. O site não realiza reservas ou pagamentos. O formulário de novidades é uma demonstração: não envia nem armazena e-mails.
 
 As fotos ilustram os destinos e não representam uma oferta de hospedagem ou pacote de viagem.
+
+## Produção e revisão
+
+`npm run build` gera `dist/` com JavaScript e CSS minificados e nomes versionados. Publique apenas essa pasta. O workflow `.github/workflows/pages.yml` valida o projeto antes de publicar; no GitHub, Pages deve estar configurado para usar GitHub Actions. Esta alteração local não publica o site automaticamente.
+
+`npm test` executa Chromium em resoluções de computador e celular, incluindo axe, navegação por teclado, formulário, busca e proteção do servidor. `npm run format:check` confere a formatação. Os testes automatizados não substituem avaliação manual com leitores de tela.
+
+Veja [REVISAO-RELATORIO.md](REVISAO-RELATORIO.md) para a análise de cada apontamento do professor.
+
+As fontes locais mantêm suas licenças OFL em `fonts/`. A imagem de Noronha e suas versões WebP mantêm o crédito CC BY-SA 3.0 no rodapé. A licença do código do projeto deve ser definida pelo titular; nenhuma licença de redistribuição foi atribuída nesta revisão.
