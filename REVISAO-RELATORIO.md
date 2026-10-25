@@ -84,3 +84,31 @@ Não há reserva, consulta de disponibilidade ou integração real de newsletter
 O workflow está preparado localmente. Nenhum commit, push, alteração de configuração remota ou publicação foi realizado durante a revisão. A saída atual para publicação é dist/; os ZIPs antigos não foram atualizados.
 
 As fontes mantêm licenças em fonts/. A foto de Noronha e suas versões WebP mantêm os créditos no rodapé. A licença de redistribuição do código deve ser definida pelo titular.
+
+## Conferência após o envio ao GitHub
+
+A conferência foi feita a pedido do proprietário, após o envio do commit `07a498b6d05244148446d8b85f9cf385e5430e18`.
+
+- O commit local e o commit da branch main no GitHub eram idênticos. Antes dos ajustes desta conferência, não havia mudanças locais pendentes.
+- A execução [Validate and publish](https://github.com/caike7735-sys/brisa-viagens/actions/runs/40148103732) concluiu validate e deploy com sucesso. A configuração de publicação exclusiva de dist/ passou a estar efetivamente ativa.
+- HTML, JavaScript e CSS referenciados pelo site público, fontes e imagens locais corresponderam aos arquivos gerados localmente. A diferença de bytes no texto da licença DM Sans era apenas de terminações de linha.
+- Os arquivos server.js, build.cjs, verify.cjs e package.json responderam 404 no site público, como esperado.
+- Os oito destinos mantiveram nomes, textos, preços e avaliações em relação ao commit anterior à revisão. Apenas as referências de imagens de Arraial e Alpes mudaram no catálogo, conforme a correção de fotos repetidas.
+- No site público, busca sem acentos, favoritos com preservação de foco, diálogo, estimativa para três viajantes e expansão dos créditos funcionaram em computador e celular. A página e o diálogo já haviam passado pelo conjunto local de testes; a repetição de axe na página pública de 1440 e 375px também não apontou violações automáticas.
+- Uma conferência adicional encontrou o seletor de viajantes com largura zero em 768px. Esse problema já estava no ajuste anterior de CSS; não foi causado pelos comandos de envio do proprietário. A barra de busca local foi corrigida para distribuir os campos em grid nas telas de tablet. Foi acrescentado teste em 541, 600, 768, 800 e 1024px. Esta correção posterior ainda precisa ser enviada ao GitHub; o commit publicado indicado acima não a contém.
+
+### Sugestões que não devem ser descritas como integralmente concluídas
+
+- Q5: dados e ícones estão separados e o estado agrupado, mas renderização e eventos continuam no mesmo módulo.
+- Q7: infraestrutura de qualidade está pronta, mas a licença do código não foi escolhida pelo titular.
+- Q4: repetição de fotos foi eliminada; correspondência geográfica de cada imagem externa não foi certificada.
+- S1: há escape de textos no catálogo atual. A integração futura de uma API exigirá validação de IDs e URLs, além do escape.
+- A2: textos fixos foram convertidos para rem; o título principal ainda usa clamp com limites em px. A conversão tipográfica não foi absoluta.
+
+As informações anteriores deste documento sobre ausência de publicação descrevem o momento da revisão inicial. A publicação foi confirmada posteriormente nesta seção. Nenhuma alteração acidental do proprietário foi identificada na comparação realizada.
+
+### Resultado após o ajuste de tablet
+
+Sintaxe/ESLint, formatação e build aprovados novamente. A rodada completa de Playwright terminou com 14 testes aprovados e dois dispensados por não se aplicarem ao projeto de resolução correspondente (menu móvel no computador e verificação de tablet na configuração móvel). A checagem automatizada de acessibilidade da página e do diálogo continuou aprovada. As nove referências de fotos externas do catálogo e das seções responderam HTTP 200 durante a conferência.
+
+Os únicos arquivos versionados alterados nesta conferência foram styles.css, tests/site.spec.js e este registro. Não foi feito commit nem push dessas alterações adicionais.

@@ -308,6 +308,7 @@ h1 em {
   width: 20px;
 }
 .search-field > span {
+  flex: 1;
   min-width: 0;
 }
 .field-title {
@@ -1044,7 +1045,8 @@ dialog::backdrop {
     font-size: 0.75rem;
   }
   .search-bar {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px;
     padding: 20px;
   }
@@ -1052,14 +1054,14 @@ dialog::backdrop {
     flex: 1;
   }
   .destination-field {
-    flex-basis: 45%;
+    grid-column: 1 / -1;
   }
   .travelers-field {
     flex: 1;
   }
   .search-button {
-    flex: 1;
-    min-width: 170px;
+    grid-column: 1 / -1;
+    min-width: 0;
   }
   .search-field:nth-child(2) {
     border: 0;
@@ -1581,6 +1583,7 @@ select:focus-visible {
     padding: 0;
   }
   .search-bar {
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
   }
   .card-badge {

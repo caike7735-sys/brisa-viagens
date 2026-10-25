@@ -135,3 +135,33 @@ test("fonts, no runtime errors, narrow layout and visual capture", async ({
   });
   expect(errors).toEqual([]);
 });
+
+test("search fields remain usable across tablet widths", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  for (const width of [541, 600, 768, 800, 1024]) {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const selector of [
+      "#destination-input",
+      "#travel-date",
+      "#travelers",
+    ]) {
+      await expect(page.locator(selector)).toBeVisible();
+      expect(
+        await page
+          .locator(selector)
+          .evaluate((element) => element.getBoundingClientRect().width),
+      ).toBeGreaterThan(90);
+    }
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.locator("#travelers").selectOption("3");
+    await page.locator('[data-details="bali"]').click();
+    await expect(page.locator(".dialog-estimate")).toContainText("13.770");
+    await page.keyboard.press("Escape");
+  }
+});
