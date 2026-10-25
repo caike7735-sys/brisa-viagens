@@ -53,13 +53,11 @@ Os destinos, preços e avaliações são demonstrativos. O site não realiza res
 
 As fotos dos destinos têm origem e localização documentadas em `images/sources.json`. As imagens do topo e de Experiências são de ambientação. Nenhuma imagem representa uma oferta de hospedagem ou pacote de viagem.
 
-## Produção e revisão
+## Produção e qualidade
 
 `npm run build` gera `dist/` com JavaScript e CSS minificados e nomes versionados. Publique apenas essa pasta. O workflow `.github/workflows/pages.yml` valida o projeto antes de publicar; no GitHub, Pages deve estar configurado para usar GitHub Actions. Esta alteração local não publica o site automaticamente.
 
 `npm test` executa Chromium em resoluções de computador e celular, incluindo axe, navegação por teclado, formulário, busca e proteção do servidor. `npm run format:check` confere a formatação. Os testes automatizados não substituem avaliação manual com leitores de tela.
-
-Veja [REVISAO-RELATORIO.md](REVISAO-RELATORIO.md) para a análise de cada apontamento do professor.
 
 As fontes locais mantêm suas licenças OFL em `fonts/`. A imagem de Noronha e suas versões WebP mantêm o crédito CC BY-SA 3.0 no rodapé. O código está sob licença MIT, em `LICENSE`. Essa licença não substitui as licenças próprias das fotografias e fontes. Os créditos de todas as fotos dos destinos ficam recolhidos no rodapé.
 
