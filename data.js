@@ -1,4 +1,5 @@
-export const destinations = [
+import { validateDestinations } from "./catalog.js";
+export const destinations = validateDestinations([
   {
     id: "noronha",
     name: "Fernando de Noronha",
@@ -21,7 +22,7 @@ export const destinations = [
     badge: "Para se reconectar",
     rating: 4.8,
     price: 4590,
-    image: "photo-1537996194471-e657df975ab4",
+    image: "images/bali-700.webp",
     description: "Templos, verde e uma energia diferente.",
     long: "Conheça os terraços de arroz de Ubud, descubra templos e encontre um ritmo mais tranquilo entre vilarejos, cachoeiras e praias. Uma inspiração para quem quer combinar natureza e cultura.",
     tags: ["Templos", "Natureza", "Cultura"],
@@ -35,7 +36,7 @@ export const destinations = [
     badge: "Cenário de filme",
     rating: 4.9,
     price: 5290,
-    image: "photo-1613395877344-13d4a8e0d49e",
+    image: "images/santorini-700.webp",
     description: "Casas brancas, mar azul e novos horizontes.",
     long: "Caminhe pelas ruelas de Oia, conheça a arquitetura das Cíclades e descubra as vistas da caldeira. Termine o dia com a culinária local e a luz dourada sobre o mar Egeu.",
     tags: ["Arquitetura", "Gastronomia", "Mar Egeu"],
@@ -49,7 +50,7 @@ export const destinations = [
     badge: "A natureza impressiona",
     rating: 4.9,
     price: 3490,
-    image: "photo-1464822759023-fed622ff2c3b",
+    image: "images/patagonia-700.webp",
     description: "Montanhas que fazem tudo ganhar perspectiva.",
     long: "Explore paisagens de montanhas, lagos e trilhas em uma das regiões mais marcantes da América do Sul. Escolha caminhadas compatíveis com seu preparo e reserve dias para contemplar a paisagem.",
     tags: ["Trilhas", "Montanhas", "Aventura"],
@@ -63,7 +64,7 @@ export const destinations = [
     badge: "Azul que surpreende",
     rating: 4.8,
     price: 1290,
-    image: "photo-1507525428034-b723cf961d3e",
+    image: "images/arraial-700.webp",
     description: "Um mergulho nas cores do litoral brasileiro.",
     long: "Uma pausa perto do mar, com praias de areia clara e águas de tons intensos. Explore mirantes, passeios de barco e cantinhos para relaxar no litoral do Rio de Janeiro.",
     tags: ["Praias", "Barco", "Descanso"],
@@ -77,7 +78,7 @@ export const destinations = [
     badge: "Uma nova perspectiva",
     rating: 4.9,
     price: 6890,
-    image: "photo-1493976040374-85c8e12f0c0e",
+    image: "images/kyoto-700.webp",
     description: "Tradições, templos e descobertas a cada passo.",
     long: "Encontre jardins, ruas históricas e templos em uma viagem pelas tradições japonesas. Planeje caminhadas tranquilas e abra espaço para experimentar a culinária e os pequenos detalhes da cidade.",
     tags: ["História", "Jardins", "Gastronomia"],
@@ -91,7 +92,7 @@ export const destinations = [
     badge: "Respire fundo",
     rating: 4.8,
     price: 1590,
-    image: "photo-1441974231531-c6227db76b6e",
+    image: "images/chapada-700.webp",
     description: "Cachoeiras, trilhas e um céu sem fim.",
     long: "Explore o cerrado com tempo para caminhar, conhecer cachoeiras e apreciar o céu. Um destino para se reconectar com o ritmo da natureza e descobrir paisagens brasileiras.",
     tags: ["Cachoeiras", "Cerrado", "Trilhas"],
@@ -105,10 +106,10 @@ export const destinations = [
     badge: "Vá um pouco mais alto",
     rating: 4.9,
     price: 7490,
-    image: "photo-1469474968028-56623f02e42e",
+    image: "images/alpes-700.webp",
     description: "Lagos, vilarejos e paisagens de tirar o fôlego.",
     long: "Descubra vilarejos de montanha, viagens de trem panorâmicas e caminhadas junto a lagos. Uma ideia de viagem para ver os Alpes em seu próprio ritmo.",
     tags: ["Montanhas", "Trens", "Caminhadas"],
     days: 7,
   },
-];
+]);

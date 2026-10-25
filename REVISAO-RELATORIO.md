@@ -1,114 +1,89 @@
-# Revisão do relatório do professor — Brisa Viagens
+# Atendimento ao relatório — Brisa Viagens
 
-A análise abrangeu as 11 páginas do relatório recebido em 24/10/2026. Os 37 apontamentos foram conferidos contra o código local. A identidade verde, os destinos, a organização das seções, os favoritos e a proposta de portfólio foram preservados. Contraste, tipografia e distribuição em telas pequenas foram ajustados para corrigir os problemas de leitura.
+Esta é a situação atual dos 37 apontamentos das 11 páginas do relatório recebido. Substitui o registro anterior, que ainda mantinha decisões parciais. As correções foram concluídas no código local; esta rodada não deve ser confundida com a versão já publicada no GitHub Pages.
 
-O relatório reúne erros atuais, riscos futuros e sugestões opcionais. Os dados fixos não demonstram uma exploração XSS atual; a proteção foi acrescentada preventivamente. Arquivos estáticos de desenvolvimento acessíveis não provam vazamento de segredo, mas a saída de produção agora contém somente arquivos públicos. A ausência de licença não autoriza atribuir uma licença ao código do titular.
+A paleta verde, as seções, os oito destinos, as descrições, os preços ilustrativos, as avaliações e a proposta de portfólio foram preservados. As fotos dos destinos foram substituídas quando necessário para terem localização e origem documentadas.
 
-## Segurança
+## Segurança — 6 itens
 
-| Item | Tratamento                                                                                                                                                                          |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| S1   | Escape do conteúdo textual interpolado nos cards e no diálogo. IDs e URLs permanecem provenientes do catálogo local controlado; uma futura API exigirá validação de esquema e URLs. |
-| S2   | Formulário demonstrativo não armazena nem transmite e-mail; chave antiga removida quando o navegador permite. Aviso visível antes do envio.                                         |
-| S3   | CSP no HTML permite código e fontes locais e imagens do Unsplash. Sem scripts executáveis inline.                                                                                   |
-| S4   | DM Sans e Manrope hospedadas localmente em WOFF2, com licenças OFL.                                                                                                                 |
-| S5   | Build e workflow preparados para publicar somente dist/. Ativação de GitHub Actions em Pages e publicação remota não foram executadas nesta revisão.                                |
-| S6   | Lista branca mantida; somente GET/HEAD, resposta 405 com Allow, nosniff e MIME sem charset em imagens.                                                                              |
+| Código | Atendimento e evidência                                                                                                                                                                                                                                                                                 |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| S1     | Textos interpolados recebem escape em utils.js/render.js. catalog.js valida IDs, caminhos de imagem, categorias, valores e tipos antes de disponibilizar o catálogo. URLs externas ou executáveis e IDs malformados são rejeitados. Testes de catálogo e de injeção no navegador cobrem essas entradas. |
+| S2     | O formulário demonstrativo não transmite nem grava e-mail. Há aviso antes do envio e remoção da antiga chave de armazenamento.                                                                                                                                                                          |
+| S3     | CSP aparece no início do head: código/fontes locais, imagens locais e somente o Unsplash para as duas fotos de ambientação. Objetos bloqueados; base e ação de formulários restritas à própria origem.                                                                                                  |
+| S4     | DM Sans e Manrope variáveis em WOFF2 ficam em fonts/, com licenças OFL. Nenhuma solicitação ao Google Fonts é necessária.                                                                                                                                                                               |
+| S5     | Workflow valida e publica exclusivamente dist/. A publicação por Actions já foi confirmada na rodada anterior. Fontes de desenvolvimento não entram no pacote público.                                                                                                                                  |
+| S6     | Servidor local mantém lista branca explícita, aceita GET/HEAD, devolve 405 com Allow para outros métodos, acrescenta nosniff e usa charset apenas em tipos de texto.                                                                                                                                    |
 
-## Qualidade e manutenção
+## Qualidade e manutenção — 13 itens
 
-| Item | Tratamento                                                                                                                                                                                                              |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Q1   | HTML, CSS e JavaScript formatados com Prettier. Compactação apenas no build.                                                                                                                                            |
-| Q2   | Fechamento em solto removido do título principal.                                                                                                                                                                       |
-| Q3   | Removido falso contador de carrossel; ordenação chamada Ordem sugerida; data identificada como planejamento e usada na estimativa, sem sugerir disponibilidade real; menu acompanha as seções com IntersectionObserver. |
-| Q4   | Substituídas fotos repetidas entre destinos, topo e Experiências. Fotos externas continuam imagens de inspiração; não foi atestada correspondência geográfica de cada foto.                                             |
-| Q5   | Script convertido para módulo ES; estado de filtros agrupado; dados e ícones separados. Renderização e eventos permanecem juntos em app.js para limitar a reestruturação.                                               |
-| Q6   | DOM falso substituído por testes reais com Playwright e axe, em computador e celular.                                                                                                                                   |
-| Q7   | ESLint, Prettier, EditorConfig, engines e workflow adicionados. Licença do código permanece decisão do titular; licenças das fontes incluídas.                                                                          |
-| Q8   | Removido fallback morto; fallback local real para falha de fotos; build npm funcional e ignore atualizado.                                                                                                              |
-| Q9   | Catálogo separado em data.js.                                                                                                                                                                                           |
-| Q10  | Favoritos carregados filtram IDs inexistentes, tipos inválidos e duplicatas.                                                                                                                                            |
-| Q11  | Detalhes de ID inexistente retornam sem lançar erro.                                                                                                                                                                    |
-| Q12  | Uma instância de Intl.NumberFormat com mínimo e máximo explícitos.                                                                                                                                                      |
-| Q13  | Busca durante digitação com atraso de 200 ms; reset restaura ordenação.                                                                                                                                                 |
+| Código | Atendimento e evidência                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Q1     | HTML, CSS e JavaScript formatados com Prettier; templates de cards e diálogo em múltiplas linhas. Compactação ocorre apenas no build.                                                                                                                                                                                                                                                                                                        |
+| Q2     | Removido o fechamento em sem abertura no título principal.                                                                                                                                                                                                                                                                                                                                                                                   |
+| Q3     | Indicador de carrossel inexistente removido. Ordem do catálogo identificada como Ordem sugerida. Campo de data explicitamente voltado a planejamento e mostrado na estimativa, sem prometer disponibilidade. Menu acompanha seções com IntersectionObserver.                                                                                                                                                                                 |
+| Q4     | Os oito destinos têm fotografias distintas e identificadas na origem: Noronha/Baía do Sancho, Bali/Ulun Danu Beratan, Santorini/Fira, Patagônia/Fitz Roy, Arraial/Praia do Forno, Kyoto/Fushimi Inari, Chapada/Rio Preto e Alpes/Lauterbrunnen. Imagens locais com origem, autoria, descrição e licença em images/sources.json; créditos acessíveis no rodapé. As fotos de ambientação do topo e de Experiências são distintas dos destinos. |
+| Q5     | Módulos ES separados para dados/validação, estado/persistência, renderização, eventos, utilitários e ícones. app.js concentra somente inicialização e metadados.                                                                                                                                                                                                                                                                             |
+| Q6     | Testes reais com Playwright/axe em computador e celular, cobrindo também tablet, diálogo, menu, newsletter, armazenamento bloqueado, fallback de foto e ausência de JavaScript. Testes unitários verificam entradas inválidas e escape.                                                                                                                                                                                                      |
+| Q7     | ESLint, Prettier, EditorConfig, engines, lockfile, workflow CI e LICENSE MIT adicionados. Licença MIT aplicada ao código conforme preferência do proprietário; fotos e fontes preservam licenças próprias. README inclui capturas de tela e instruções atualizadas.                                                                                                                                                                          |
+| Q8     | Tratamento morto de data-fallback removido; fallback de imagem local funcional. npm run build copia os arquivos reais, limpa apenas sua pasta dist/ antes de gerar e não referencia image.png inexistente. Ignore atualizado.                                                                                                                                                                                                                |
+| Q9     | Dados dos destinos em data.js, independentes dos manipuladores e templates.                                                                                                                                                                                                                                                                                                                                                                  |
+| Q10    | Favoritos carregados descartam IDs inexistentes, tipos inválidos e duplicatas; dados malformados ou armazenamento bloqueado não interrompem a página.                                                                                                                                                                                                                                                                                        |
+| Q11    | details retorna cedo para ID inexistente; ação de favorito também valida ID.                                                                                                                                                                                                                                                                                                                                                                 |
+| Q12    | Uma instância de Intl.NumberFormat com mínimo e máximo de casas decimais explícitos.                                                                                                                                                                                                                                                                                                                                                         |
+| Q13    | Busca ao digitar com atraso de 200 ms; reset restaura texto, categoria, modo favoritos e ordenação.                                                                                                                                                                                                                                                                                                                                          |
 
-## Desempenho
+## Desempenho — 7 itens
 
-| Item | Tratamento                                                                                                                                                          |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1   | Hero com srcset 800/1200/1600/2400, sizes, qualidade 70 e prioridade alta. O navegador escolhe conforme tela e densidade.                                           |
-| P2   | Noronha WebP 640 e 1280: aproximadamente 51 e 205 KB, contra 349 KB do JPEG. Original preservado para referência e compartilhamento.                                |
-| P3   | Fontes locais variáveis, font-display swap e preload da fonte principal.                                                                                            |
-| P4   | Ícones estáticos diretamente no HTML, sem esperar JavaScript. SVGs inline atendem ao objetivo de evitar deslocamentos sem exigir o sprite sugerido.                 |
-| P5   | Cards com srcset 400/700/1000, sizes correspondente às colunas e dimensões explícitas.                                                                              |
-| P6   | Esbuild gera CSS e JavaScript minificados e nomes com hash em dist/.                                                                                                |
-| P7   | Favoritar atualiza botão e contador sem recriar o grid. Remoção na lista de favoritos recalcula a lista e restaura foco ao próximo item ou ao botão Minhas viagens. |
+| Código | Atendimento e evidência                                                                                                                                                |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P1     | Hero com srcset 800/1200/1600/2400, sizes, qualidade 70, dimensões e fetchpriority high.                                                                               |
+| P2     | Noronha com WebP 640/1280 e srcset; JPEG original mantido para referência/compartilhamento.                                                                            |
+| P3     | Fontes variáveis locais, font-display swap e preload da fonte principal.                                                                                               |
+| P4     | Sprite SVG inline com symbol/use. Ícones estáticos aparecem sem aguardar JavaScript e permanecem disponíveis sem ele.                                                  |
+| P5     | Demais destinos locais com variantes WebP 400/700/1000/1280, srcset e sizes do grid; dimensões explícitas e carregamento tardio dos cards.                             |
+| P6     | Esbuild gera CSS/JavaScript minificados com nomes contendo hash. dist/ é recriada para não acumular arquivos de builds anteriores.                                     |
+| P7     | Favoritar um card atualiza somente botão e contador. Recriação da lista ocorre quando uma remoção efetivamente muda os resultados de Minhas viagens, com foco tratado. |
 
-## Acessibilidade, SEO e responsividade
+## Acessibilidade, SEO e responsividade — 11 itens
 
-| Item | Tratamento                                                                                                                                                    |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A1   | Textos secundários e sobretítulos escurecidos; axe verifica contraste em computador e celular.                                                                |
-| A2   | Base 1rem; tamanhos fixos de texto convertidos a rem com mínimo de 0,75rem. Títulos responsivos existentes preservados.                                       |
-| A3   | Foco preservado ao favoritar; remoção em favoritos tem destino de foco explícito.                                                                             |
-| A4   | Minhas viagens recebe nome acessível permanente.                                                                                                              |
-| A5   | Inputs e selects com contorno visível de 2px.                                                                                                                 |
-| A6   | Diálogo ligado ao título; menu fecha com Escape e clique externo, devolvendo foco com Escape.                                                                 |
-| A7   | Open Graph, Twitter Card, canonical, favicon e ícone Apple adicionados. Compartilhamento público depende da publicação e dos caches das plataformas.          |
-| A8   | Uma coluna até 420px; hero com altura mínima em svh e espaço para o texto.                                                                                    |
-| A9   | Rótulos visíveis nomeiam data e viajantes sem aria-label divergente.                                                                                          |
-| A10  | Botões de favoritos, detalhes, fechar e menu com área mínima de 44px.                                                                                         |
-| A11  | Noscript e dados estruturados TouristDestination/ItemList. TravelAgency não foi usado porque o projeto é demonstrativo e não representa uma agência operante. |
+| Código | Atendimento e evidência                                                                                                                                                                                                                                                                                                        |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| A1     | Textos secundários e sobretítulos com contraste corrigido; fundo do hero reforçado e contornos de foco escuros. Axe verifica página e diálogo nos cenários avaliados.                                                                                                                                                          |
+| A2     | Base 1rem, rótulos/legendas com mínimo de 0,75rem e todos os tamanhos de fonte fixos em rem; limites do clamp do título também em rem. O título agora acompanha a preferência de tamanho de fonte.                                                                                                                             |
+| A3     | Foco de teclado preservado ao favoritar; destino explícito após remoção na lista de favoritos. Ação dentro do diálogo mantém foco dentro dele.                                                                                                                                                                                 |
+| A4     | Botão Minhas viagens mantém nome acessível mesmo com texto visual oculto.                                                                                                                                                                                                                                                      |
+| A5     | Inputs/selects com contorno visível de 2px e contraste forte. Links e botões também têm foco visível.                                                                                                                                                                                                                          |
+| A6     | Diálogo nomeado pelo título do destino; menu fecha por Escape e clique externo, com restauração de foco ao usar Escape.                                                                                                                                                                                                        |
+| A7     | Open Graph, Twitter Card, canonical, favicon SVG e apple-touch-icon. Imagem de compartilhamento hospedada no projeto.                                                                                                                                                                                                          |
+| A8     | Uma coluna até 420px; hero com min-height e svh. Campos de busca em grid no tablet e em coluna no celular. Testes exercitam 320, 375, 541, 600, 768, 800, 1024 e 1440px.                                                                                                                                                       |
+| A9     | Rótulos visíveis nomeiam data e viajantes sem aria-label divergente.                                                                                                                                                                                                                                                           |
+| A10    | Áreas de favoritos, detalhes, fechar diálogo e menu com mínimo de 44 por 44px.                                                                                                                                                                                                                                                 |
+| A11    | Mensagem noscript e dados estruturados de destinos com ItemList/TouristDestination. Foi usado o tipo adequado ao conteúdo: TravelAgency seria uma indicação incorreta de agência comercial para este portfólio sem reservas. O problema de ausência de metadados está atendido sem acrescentar uma declaração comercial falsa. |
 
-## Validação realizada na revisão
+## Pontos fortes preservados
 
-- npm run check: sintaxe e ESLint aprovados.
-- npm run format:check: formatação aprovada.
-- npm run build: saída de produção gerada com sucesso.
-- Navegação no build de produção: cards e diálogo funcionaram com arquivos versionados, sem erros JavaScript.
-- Playwright: 13 cenários aprovados; um cenário de menu móvel dispensado no computador por não se aplicar.
-- Axe: nenhuma violação automática nos critérios WCAG A/AA avaliados, na página e no diálogo, em computador e celular.
-- Layout também conferido em 320px, sem rolagem horizontal; capturas de computador e celular inspecionadas.
+Lista branca no servidor, lang pt-BR, avisos aria-live, nomes acessíveis nos controles de ícone, tratamento de armazenamento indisponível e preferência de movimento reduzido. Rolagens programáticas também respeitam movimento reduzido.
 
-Esses resultados são da execução durante a revisão original; a restauração deste documento não representa uma nova execução dos testes. A avaliação automatizada não constitui certificação WCAG e não substitui testes manuais com leitores de tela.
+## Validação e alcance
 
-## Ajuste posterior solicitado
+Os comandos de validação são npm run check, npm run format:check, npm test e npm run test:production (que também executa o build). O conjunto cobre segurança do catálogo, busca, filtros, ordenação, favoritos, diálogo, estimativa, menu, newsletter, acessibilidade automatizada, imagens, servidor e telas pequenas. A saída de produção também é aberta em navegador para conferir os arquivos versionados.
 
-O crédito da foto de Fernando de Noronha foi integrado ao rodapé, recolhido no controle nativo “Créditos da fotografia”. Autor, origem, licença CC BY-SA 3.0 e informação de redimensionamento continuam disponíveis ao expandir. O build foi gerado novamente após esse ajuste.
+A análise automatizada não é uma certificação de conformidade WCAG e não substitui avaliação com usuários e leitores de tela. As fontes e fotos possuem atribuições próprias. O site continua demonstrativo: sem reservas, pagamentos, disponibilidade real ou envio de newsletter.
 
-## Limites e publicação
+## Publicação
 
-Não há reserva, consulta de disponibilidade ou integração real de newsletter. Como o site usa módulos ES, deve ser aberto pelo servidor com npm start, em vez de abrir index.html diretamente.
+As versões anteriores foram publicadas nos commits 07a498b e d4b758f. As alterações finais descritas neste documento ainda precisam ser enviadas e publicadas; nenhuma afirmação de publicação desta rodada é feita antes da execução correspondente do GitHub Actions.
 
-O workflow está preparado localmente. Nenhum commit, push, alteração de configuração remota ou publicação foi realizado durante a revisão. A saída atual para publicação é dist/; os ZIPs antigos não foram atualizados.
+### Resultado da rodada final
 
-As fontes mantêm licenças em fonts/. A foto de Noronha e suas versões WebP mantêm os créditos no rodapé. A licença de redistribuição do código deve ser definida pelo titular.
+- Sintaxe e ESLint: aprovados.
+- Formatação Prettier: aprovada.
+- Testes unitários: 3 aprovados.
+- Testes de navegador: 24 aprovados; 2 dispensados somente por incompatibilidade entre o cenário e a resolução (menu móvel no computador e varredura de tablet no projeto móvel).
+- Build e teste de produção sob o caminho /brisa-viagens/: aprovados, sem arquivos locais faltando ou erros de JavaScript.
+- Axe: nenhuma violação automática encontrada nos critérios A/AA avaliados na página e no diálogo, em computador e celular.
+- Comparação do catálogo com o commit d4b758f: oito destinos preservados e nenhuma alteração em nomes, descrições, preços, avaliações ou demais dados além das imagens.
+- Capturas atuais de computador/celular inspecionadas e disponíveis no README.
 
-## Conferência após o envio ao GitHub
-
-A conferência foi feita a pedido do proprietário, após o envio do commit `07a498b6d05244148446d8b85f9cf385e5430e18`.
-
-- O commit local e o commit da branch main no GitHub eram idênticos. Antes dos ajustes desta conferência, não havia mudanças locais pendentes.
-- A execução [Validate and publish](https://github.com/caike7735-sys/brisa-viagens/actions/runs/40148103732) concluiu validate e deploy com sucesso. A configuração de publicação exclusiva de dist/ passou a estar efetivamente ativa.
-- HTML, JavaScript e CSS referenciados pelo site público, fontes e imagens locais corresponderam aos arquivos gerados localmente. A diferença de bytes no texto da licença DM Sans era apenas de terminações de linha.
-- Os arquivos server.js, build.cjs, verify.cjs e package.json responderam 404 no site público, como esperado.
-- Os oito destinos mantiveram nomes, textos, preços e avaliações em relação ao commit anterior à revisão. Apenas as referências de imagens de Arraial e Alpes mudaram no catálogo, conforme a correção de fotos repetidas.
-- No site público, busca sem acentos, favoritos com preservação de foco, diálogo, estimativa para três viajantes e expansão dos créditos funcionaram em computador e celular. A página e o diálogo já haviam passado pelo conjunto local de testes; a repetição de axe na página pública de 1440 e 375px também não apontou violações automáticas.
-- Uma conferência adicional encontrou o seletor de viajantes com largura zero em 768px. Esse problema já estava no ajuste anterior de CSS; não foi causado pelos comandos de envio do proprietário. A barra de busca local foi corrigida para distribuir os campos em grid nas telas de tablet. Foi acrescentado teste em 541, 600, 768, 800 e 1024px. Esta correção posterior ainda precisa ser enviada ao GitHub; o commit publicado indicado acima não a contém.
-
-### Sugestões que não devem ser descritas como integralmente concluídas
-
-- Q5: dados e ícones estão separados e o estado agrupado, mas renderização e eventos continuam no mesmo módulo.
-- Q7: infraestrutura de qualidade está pronta, mas a licença do código não foi escolhida pelo titular.
-- Q4: repetição de fotos foi eliminada; correspondência geográfica de cada imagem externa não foi certificada.
-- S1: há escape de textos no catálogo atual. A integração futura de uma API exigirá validação de IDs e URLs, além do escape.
-- A2: textos fixos foram convertidos para rem; o título principal ainda usa clamp com limites em px. A conversão tipográfica não foi absoluta.
-
-As informações anteriores deste documento sobre ausência de publicação descrevem o momento da revisão inicial. A publicação foi confirmada posteriormente nesta seção. Nenhuma alteração acidental do proprietário foi identificada na comparação realizada.
-
-### Resultado após o ajuste de tablet
-
-Sintaxe/ESLint, formatação e build aprovados novamente. A rodada completa de Playwright terminou com 14 testes aprovados e dois dispensados por não se aplicarem ao projeto de resolução correspondente (menu móvel no computador e verificação de tablet na configuração móvel). A checagem automatizada de acessibilidade da página e do diálogo continuou aprovada. As nove referências de fotos externas do catálogo e das seções responderam HTTP 200 durante a conferência.
-
-Os únicos arquivos versionados alterados nesta conferência foram styles.css, tests/site.spec.js e este registro. Não foi feito commit nem push dessas alterações adicionais.
+A matriz acima contém os 37 códigos: 6 de segurança, 13 de qualidade, 7 de desempenho e 11 de acessibilidade/SEO. As decisões que antes constavam como parciais foram resolvidas nesta rodada; A11 usa a representação semântica adequada a um portfólio (WebSite e TouristDestination).

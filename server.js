@@ -2,6 +2,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+const port = Number(process.env.PORT) || 3000;
 const root = path.dirname(fileURLToPath(import.meta.url));
 const publicFiles = new Set([
   "index.html",
@@ -9,6 +10,11 @@ const publicFiles = new Set([
   "app.js",
   "data.js",
   "icons.js",
+  "state.js",
+  "utils.js",
+  "render.js",
+  "events.js",
+  "catalog.js",
   "favicon.svg",
   "apple-touch-icon.png",
   "fernando-de-noronha.jpg",
@@ -19,6 +25,18 @@ const publicFiles = new Set([
   "fonts/OFL-dm-sans.txt",
   "fonts/OFL-manrope.txt",
 ]);
+for (const id of [
+  "bali",
+  "santorini",
+  "patagonia",
+  "arraial",
+  "kyoto",
+  "chapada",
+  "alpes",
+]) {
+  for (const width of [400, 700, 1000, 1280])
+    publicFiles.add(`images/${id}-${width}.webp`);
+}
 const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -56,6 +74,6 @@ http
       res.end(req.method === "HEAD" ? undefined : data);
     });
   })
-  .listen(Number(process.env.PORT) || 3000, "127.0.0.1", () =>
-    console.log("Brisa: http://localhost:3000"),
+  .listen(port, "127.0.0.1", () =>
+    console.log(`Brisa: http://localhost:${port}`),
   );

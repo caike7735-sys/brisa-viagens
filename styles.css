@@ -62,7 +62,7 @@ button {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #8faf50;
+  outline: 3px solid var(--green);
   outline-offset: 4px;
 }
 svg {
@@ -215,7 +215,7 @@ h3 {
   font-family: "Manrope", sans-serif;
 }
 h1 {
-  font-size: clamp(40px, 4.5vw, 67px);
+  font-size: clamp(2.5rem, 4.5vw, 4.1875rem);
   line-height: 1.15;
   letter-spacing: -2.5px;
   font-weight: 500;
@@ -1622,4 +1622,19 @@ select:focus-visible {
   .header {
     gap: 8px;
   }
+}
+
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.photo-credit ul {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 0;
+}
+.photo-credit li + li {
+  margin-top: 0.5rem;
 }

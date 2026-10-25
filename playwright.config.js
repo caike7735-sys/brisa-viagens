@@ -1,11 +1,14 @@
 import { defineConfig } from "@playwright/test";
+const port = Number(process.env.TEST_PORT) || 3100;
 export default defineConfig({
   testDir: "./tests",
-  use: { baseURL: "http://127.0.0.1:3000" },
+  testMatch: "**/*.spec.js",
+  use: { baseURL: `http://127.0.0.1:${port}` },
   webServer: {
-    command: "npm start",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    command: "node server.js",
+    env: { PORT: String(port) },
+    url: `http://127.0.0.1:${port}`,
+    reuseExistingServer: false,
   },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },

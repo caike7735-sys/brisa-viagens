@@ -1,7 +1,11 @@
 const fs = require("node:fs");
 const { build } = require("esbuild");
+const path = require("node:path");
 (async () => {
-  const out = "dist";
+  const out = path.resolve(__dirname, "dist");
+  if (out !== path.join(__dirname, "dist"))
+    throw new Error("Saída de build inválida.");
+  fs.rmSync(out, { recursive: true, force: true });
   fs.mkdirSync(out, { recursive: true });
   const result = await build({
     entryPoints: { app: "app.js", styles: "styles.css" },
@@ -14,7 +18,7 @@ const { build } = require("esbuild");
   });
   let html = fs.readFileSync("index.html", "utf8");
   for (const [name, info] of Object.entries(result.metafile.outputs)) {
-    const file = name.slice(5);
+    const file = path.basename(name);
     if (info.entryPoint === "app.js")
       html = html.replace('src="app.js"', `src="${file}"`);
     if (info.entryPoint === "styles.css")
@@ -28,6 +32,8 @@ const { build } = require("esbuild");
     "fernando-de-noronha-640.webp",
     "fernando-de-noronha-1280.webp",
     "fonts",
+    "images",
+    "LICENSE",
   ])
     fs.cpSync(name, `${out}/${name}`, { recursive: true });
   fs.writeFileSync(`${out}/.nojekyll`, "");

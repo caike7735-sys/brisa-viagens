@@ -165,3 +165,95 @@ test("search fields remain usable across tablet widths", async ({
     await page.keyboard.press("Escape");
   }
 });
+
+test("blocked storage still permits searching and saving in the session", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    for (const method of ["getItem", "setItem", "removeItem"])
+      Storage.prototype[method] = () => {
+        throw new Error("Storage unavailable");
+      };
+  });
+  await page.reload();
+  await expect(page.locator(".destination-card")).toHaveCount(4);
+  await page.locator('[data-save="bali"]').click();
+  await expect(page.locator("#toast")).toContainText("nesta sessão");
+  await page.locator("#show-favorites").click();
+  await expect(page.locator(".destination-card h3")).toHaveText("Bali");
+});
+test("rendering escapes external text and ignores unknown details IDs", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.evaluate(async () => {
+    const { destinations } = await import("/data.js");
+    const { render, details } = await import("/render.js");
+    destinations[0].name = '<img class="injected" src=x onerror="alert(1)">';
+    render();
+    details("not-a-destination");
+  });
+  await expect(page.locator(".destination-card h3").first()).toHaveText(
+    '<img class="injected" src=x onerror="alert(1)">',
+  );
+  await expect(page.locator(".injected")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+test("dialog favorite action preserves dialog focus and supports date and traveler estimate", async ({
+  page,
+}) => {
+  await page.locator("#travelers").selectOption("3");
+  await page.locator("#travel-date").fill("2030-12-25");
+  await page.locator('[data-details="bali"]').click();
+  await expect(page.locator(".dialog-estimate")).toContainText("25/12/2030");
+  await expect(page.locator(".dialog-estimate")).toContainText("13.770");
+  const save = page.locator("#save-from-dialog");
+  await save.click();
+  await expect(save).toContainText("Remover");
+  await expect(save).toBeFocused();
+  await page.keyboard.press("Escape");
+  await page.locator("#show-favorites").click();
+  await expect(page.locator(".destination-card h3")).toHaveText("Bali");
+  await page.locator('[data-details="bali"]').click();
+  await page.locator("#save-from-dialog").click();
+  await expect(page.locator("#save-from-dialog")).toBeFocused();
+  await expect(page.locator("#save-from-dialog")).toContainText("Salvar");
+});
+test("a missing destination image uses the local fallback", async ({
+  page,
+}) => {
+  await page.route("**/images/bali-*.webp", (route) => route.abort());
+  await page.reload();
+  const image = page.locator(".destination-card img").nth(1);
+  await image.scrollIntoViewIfNeeded();
+  await expect(image).toHaveAttribute(
+    "alt",
+    "Paisagem de inspiração: Fernando de Noronha",
+  );
+  await expect
+    .poll(() =>
+      image.evaluate((element) => element.complete && element.naturalWidth > 0),
+    )
+    .toBe(true);
+});
+test("static icons and noscript message remain available without JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto(baseURL);
+    await expect(page.locator("noscript p")).toContainText(
+      "Ative o JavaScript",
+    );
+    expect(
+      await page
+        .locator(".hero-link svg")
+        .evaluate((element) => element.getBBox().width),
+    ).toBeGreaterThan(0);
+  } finally {
+    await context.close();
+  }
+});

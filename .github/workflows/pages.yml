@@ -20,7 +20,7 @@ jobs:
       - run: npm run check
       - run: npm run format:check
       - run: npm test
-      - run: npm run build
+      - run: npm run test:production
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
