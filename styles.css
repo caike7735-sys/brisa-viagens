@@ -857,15 +857,15 @@ footer > span {
   border-radius: 9px;
   padding: 15px 22px;
   box-shadow: 0 5px 25px #0002;
-  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: 0.25s;
+  transition: transform 0.25s;
   z-index: 20;
   max-width: 90%;
   font-size: 0.75rem;
 }
 .toast.visible {
-  opacity: 1;
+  visibility: visible;
   transform: translate(-50%, 0);
 }
 dialog {

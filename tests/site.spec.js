@@ -270,6 +270,8 @@ test("dynamic search results, favorites and empty states meet WCAG contrast", as
   expect(results.violations).toEqual([]);
   await page.locator("#all-destinations").click();
   await page.locator('[data-save="bali"]').click();
+  await expect(page.locator("#toast")).toHaveCSS("visibility", "visible");
+  await expect(page.locator("#toast")).toHaveCSS("opacity", "1");
   await page.locator("#show-favorites").click();
   await expect(page.locator("#results-message")).toContainText(
     "Suas viagens salvas",
@@ -279,6 +281,8 @@ test("dynamic search results, favorites and empty states meet WCAG contrast", as
     .analyze();
   expect(results.violations).toEqual([]);
   await page.locator('[data-save="bali"]').click();
+  await expect(page.locator("#toast")).toHaveCSS("visibility", "visible");
+  await expect(page.locator("#toast")).toHaveCSS("opacity", "1");
   await expect(page.locator("#empty-state")).toBeVisible();
   await page.locator(".photo-credit summary").click();
   results = await new AxeBuilder({ page })

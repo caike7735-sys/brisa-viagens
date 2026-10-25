@@ -1,6 +1,6 @@
 # Atendimento ao relatório — Brisa Viagens
 
-Esta é a situação atual dos 37 apontamentos das 11 páginas do relatório recebido. Substitui o registro anterior, que ainda mantinha decisões parciais. A implementação principal foi publicada no commit 8ca2247. A conferência posterior descrita ao final encontrou um ajuste de contraste em estado dinâmico; essa correção está no código local e aguarda publicação.
+Esta é a situação atual dos 37 apontamentos das 11 páginas do relatório recebido. Substitui o registro anterior, que ainda mantinha decisões parciais. A implementação principal foi publicada no commit 8ca2247. A conferência posterior descrita ao final corrigiu o contraste dos resultados e a transição do aviso de favoritos. Este documento registra a implementação; o estado da publicação é confirmado na execução correspondente do GitHub Actions.
 
 A paleta verde, as seções, os oito destinos, as descrições, os preços ilustrativos, as avaliações e a proposta de portfólio foram preservados. As fotos dos destinos foram substituídas quando necessário para terem localização e origem documentadas.
 
@@ -73,7 +73,7 @@ A análise automatizada não é uma certificação de conformidade WCAG e não s
 
 ## Publicação
 
-As rodadas anteriores foram publicadas nos commits 07a498b, d4b758f e 8ca2247. A execução do commit 8ca2247 concluiu validação e publicação com sucesso, confirmadas também no site público. O ajuste de contraste da conferência posterior ainda não foi publicado.
+As rodadas anteriores foram publicadas nos commits 07a498b, d4b758f e 8ca2247. A execução do commit 8ca2247 concluiu validação e publicação com sucesso, confirmadas também no site público. As correções posteriores são acompanhadas no workflow Validate and publish; consulte a execução do commit correspondente para confirmar seu estado de publicação.
 
 ### Resultado da rodada final
 
@@ -94,6 +94,10 @@ A branch main remota e a versão local estavam no commit 8ca2247, sem modificaç
 
 Uma verificação adicional no site público após a busca detectou contraste insuficiente em #results-message, que não era exercitado pelos testes anteriores de acessibilidade. A cor foi substituída por var(--muted), já usada nos demais textos secundários. Um novo cenário testa busca, favoritos, estado vazio e créditos expandidos com axe em computador e celular. O conteúdo e o layout não foram alterados.
 
-A verificação do site público em 1440, 768 e 375px confirmou os oito destinos, ausência de rolagem horizontal, foco preservado ao favoritar, busca sem acentos e estimativa correta de R$ 13.770 para três viajantes em Bali. Não houve erros de JavaScript nesses fluxos. A ressalva de contraste observada na versão publicada foi corrigida localmente nesta conferência; não deve ser descrita como publicada antes de novo envio.
+A verificação do site público em 1440, 768 e 375px confirmou os oito destinos, ausência de rolagem horizontal, foco preservado ao favoritar, busca sem acentos e estimativa correta de R$ 13.770 para três viajantes em Bali. Não houve erros de JavaScript nesses fluxos. A ressalva de contraste observada na versão publicada foi corrigida localmente nesta conferência; sua publicação depende da conclusão com sucesso do novo envio autorizado.
 
-Resultado após esta correção: 3 testes unitários, 26 testes de navegador e 1 teste de produção aprovados; 2 cenários dispensados por não se aplicarem à configuração de resolução correspondente. Código e formatação passaram. Axe não apontou violações automáticas nos estados adicionais de busca, favoritos, lista vazia e créditos expandidos, em computador e celular. Nenhuma publicação nova foi realizada nesta conferência.
+Resultado após esta correção: 3 testes unitários, 26 testes de navegador e 1 teste de produção aprovados; 2 cenários dispensados por não se aplicarem à configuração de resolução correspondente. Código e formatação passaram. Axe não apontou violações automáticas nos estados adicionais de busca, favoritos, lista vazia e créditos expandidos, em computador e celular. A etapa de conferência foi concluída antes da autorização posterior para publicar.
+
+### Ajuste identificado pelo GitHub Actions durante a publicação
+
+Na execução do commit cd77943, o teste novo capturou o aviso de favorito durante sua transição de opacidade e detectou contraste temporariamente insuficiente. A publicação foi interrompida automaticamente. O aviso passou a usar visibility para aparecer/desaparecer e mantém apenas o movimento de entrada, sem reduzir a opacidade do texto. O teste verifica também que o aviso visível mantém opacidade 1. Nenhum critério de acessibilidade foi removido do teste.
