@@ -257,3 +257,32 @@ test("static icons and noscript message remain available without JavaScript", as
     await context.close();
   }
 });
+
+test("dynamic search results, favorites and empty states meet WCAG contrast", async ({
+  page,
+}) => {
+  await page.locator("#destination-input").fill("grecia");
+  await expect(page.locator("#results-message")).toContainText("1 destino");
+  await expect(page.locator(".destination-card")).toHaveCount(1);
+  let results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .analyze();
+  expect(results.violations).toEqual([]);
+  await page.locator("#all-destinations").click();
+  await page.locator('[data-save="bali"]').click();
+  await page.locator("#show-favorites").click();
+  await expect(page.locator("#results-message")).toContainText(
+    "Suas viagens salvas",
+  );
+  results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .analyze();
+  expect(results.violations).toEqual([]);
+  await page.locator('[data-save="bali"]').click();
+  await expect(page.locator("#empty-state")).toBeVisible();
+  await page.locator(".photo-credit summary").click();
+  results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .analyze();
+  expect(results.violations).toEqual([]);
+});

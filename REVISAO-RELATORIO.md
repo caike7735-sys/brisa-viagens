@@ -1,6 +1,6 @@
 # Atendimento ao relatório — Brisa Viagens
 
-Esta é a situação atual dos 37 apontamentos das 11 páginas do relatório recebido. Substitui o registro anterior, que ainda mantinha decisões parciais. As correções foram concluídas no código local; esta rodada não deve ser confundida com a versão já publicada no GitHub Pages.
+Esta é a situação atual dos 37 apontamentos das 11 páginas do relatório recebido. Substitui o registro anterior, que ainda mantinha decisões parciais. A implementação principal foi publicada no commit 8ca2247. A conferência posterior descrita ao final encontrou um ajuste de contraste em estado dinâmico; essa correção está no código local e aguarda publicação.
 
 A paleta verde, as seções, os oito destinos, as descrições, os preços ilustrativos, as avaliações e a proposta de portfólio foram preservados. As fotos dos destinos foram substituídas quando necessário para terem localização e origem documentadas.
 
@@ -73,7 +73,7 @@ A análise automatizada não é uma certificação de conformidade WCAG e não s
 
 ## Publicação
 
-As versões anteriores foram publicadas nos commits 07a498b e d4b758f. As alterações finais descritas neste documento ainda precisam ser enviadas e publicadas; nenhuma afirmação de publicação desta rodada é feita antes da execução correspondente do GitHub Actions.
+As rodadas anteriores foram publicadas nos commits 07a498b, d4b758f e 8ca2247. A execução do commit 8ca2247 concluiu validação e publicação com sucesso, confirmadas também no site público. O ajuste de contraste da conferência posterior ainda não foi publicado.
 
 ### Resultado da rodada final
 
@@ -87,3 +87,13 @@ As versões anteriores foram publicadas nos commits 07a498b e d4b758f. As altera
 - Capturas atuais de computador/celular inspecionadas e disponíveis no README.
 
 A matriz acima contém os 37 códigos: 6 de segurança, 13 de qualidade, 7 de desempenho e 11 de acessibilidade/SEO. As decisões que antes constavam como parciais foram resolvidas nesta rodada; A11 usa a representação semântica adequada a um portfólio (WebSite e TouristDestination).
+
+## Conferência posterior da versão publicada
+
+A branch main remota e a versão local estavam no commit 8ca2247, sem modificações de código feitas pelo proprietário. A repetição dos testes iniciais passou (3 unitários, 24 de navegador e 1 de produção). A auditoria npm não encontrou vulnerabilidades conhecidas nas dependências instaladas.
+
+Uma verificação adicional no site público após a busca detectou contraste insuficiente em #results-message, que não era exercitado pelos testes anteriores de acessibilidade. A cor foi substituída por var(--muted), já usada nos demais textos secundários. Um novo cenário testa busca, favoritos, estado vazio e créditos expandidos com axe em computador e celular. O conteúdo e o layout não foram alterados.
+
+A verificação do site público em 1440, 768 e 375px confirmou os oito destinos, ausência de rolagem horizontal, foco preservado ao favoritar, busca sem acentos e estimativa correta de R$ 13.770 para três viajantes em Bali. Não houve erros de JavaScript nesses fluxos. A ressalva de contraste observada na versão publicada foi corrigida localmente nesta conferência; não deve ser descrita como publicada antes de novo envio.
+
+Resultado após esta correção: 3 testes unitários, 26 testes de navegador e 1 teste de produção aprovados; 2 cenários dispensados por não se aplicarem à configuração de resolução correspondente. Código e formatação passaram. Axe não apontou violações automáticas nos estados adicionais de busca, favoritos, lista vazia e créditos expandidos, em computador e celular. Nenhuma publicação nova foi realizada nesta conferência.

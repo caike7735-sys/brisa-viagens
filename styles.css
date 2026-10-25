@@ -625,7 +625,7 @@ h2 {
 }
 .results-message {
   font-size: 0.75rem;
-  color: #6b7e63;
+  color: var(--muted);
   margin: 0 0 15px;
 }
 .results-message:empty {
